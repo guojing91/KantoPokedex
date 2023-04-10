@@ -1,7 +1,7 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
     background: #23242a;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -131,7 +131,7 @@ body {
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    height: 25px;
+    /* height: 25px; */
 }
 
 .container {
@@ -141,6 +141,10 @@ body {
 
 .stat, .total-stats {
     color: white;
+}
+
+.table {
+    color: #fff;
 }
 
 

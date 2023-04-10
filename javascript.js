@@ -9,7 +9,7 @@ dropdowns.forEach(dropdown => {
     const menu = document.querySelector('.menu');
     const options = document.querySelectorAll('.menu li');
     const selected = document.querySelector('.selected');
-    
+
     /* this method is used if we have more than one dropdown menu on the page */
 
     //Add a click event to the select element
@@ -43,7 +43,7 @@ dropdowns.forEach(dropdown => {
 
             //Change selected text to lower case to put into url
             const pokemonName = (selected.innerText).toLowerCase();
-            console.log(pokemonName);
+            // console.log(pokemonName);
             //Put name into url to get image from API
             fetch('https://pokeapi.co/api/v2/pokemon/' + pokemonName)
                 .then(response => response.json())
@@ -70,15 +70,86 @@ dropdowns.forEach(dropdown => {
                     document.getElementById('stats-spatt').innerText = statsSpAtt;
                     document.getElementById('stats-spdef').innerText = statsSpDef;
                     document.getElementById('stats-speed').innerText = statsSpd;
-                    document.getElementById('stats-hp').style.cssText = `width: ${statsHP/200*100}%; background-color: #04AA6D`;
-                    document.getElementById('stats-attack').style.cssText = `width: ${statsAtt/200*100}%; background-color: #2196F3`;
-                    document.getElementById('stats-defense').style.cssText = `width: ${statsDef/200*100}%; background-color: #F44336`;
-                    document.getElementById('stats-spatt').style.cssText = `width: ${statsSpAtt/200*100}%; background-color: #B434EB`;
-                    document.getElementById('stats-spdef').style.cssText = `width: ${statsSpDef/200*100}%; background-color: #EB9B34`;
-                    document.getElementById('stats-speed').style.cssText = `width: ${statsSpd/200*100}%; background-color: #5E420C`;
+                    document.getElementById('stats-hp').style.cssText = `width: ${statsHP / 200 * 100}%; background-color: #04AA6D`;
+                    document.getElementById('stats-attack').style.cssText = `width: ${statsAtt / 200 * 100}%; background-color: #2196F3`;
+                    document.getElementById('stats-defense').style.cssText = `width: ${statsDef / 200 * 100}%; background-color: #F44336`;
+                    document.getElementById('stats-spatt').style.cssText = `width: ${statsSpAtt / 200 * 100}%; background-color: #B434EB`;
+                    document.getElementById('stats-spdef').style.cssText = `width: ${statsSpDef / 200 * 100}%; background-color: #EB9B34`;
+                    document.getElementById('stats-speed').style.cssText = `width: ${statsSpd / 200 * 100}%; background-color: #5E420C`;
                     document.getElementById('total-stats').innerText = `Total = ${statsHP + statsAtt + statsDef + statsSpAtt + statsSpDef + statsSpd}`;
+
+                    var movesTable = data.moves.filter(moveset => moveset.version_group_details[0].move_learn_method.name === 'level-up');
+                    // console.log(movesTable);
+
+                    var moveDetails = movesTable.map(thisMove => thisMove.move);
+                    // console.log(moveDetails);
+                    var moveValue = moveDetails.map(names => Object.values(names)[0]);
+                    // console.log(moveValue);
+                    var llearnLevel = [];
+                    for (var j = 0; j < movesTable.length; j++) {
+                        for (var i = 0; i < movesTable[j].version_group_details.length; i++) {
+                            if (movesTable[j].version_group_details[i].version_group.name === 'scarlet-violet' && movesTable[j].version_group_details[i].level_learned_at != 0) {
+                                llearnLevel.push(movesTable[j].version_group_details[i].level_learned_at);
+                            } else if (movesTable[j].version_group_details[i].version_group.name === 'sword-shield' && movesTable[j].version_group_details[i].level_learned_at != 0) {
+                                llearnLevel.push(movesTable[j].version_group_details[i].level_learned_at);
+                            // } else if (movesTable[j].version_group_details[i].version_group.name === 'ultra-sun-ultra-moon' && movesTable[j].version_group_details[i].level_learned_at != 0) {
+                            //     llearnLevel.push(movesTable[j].version_group_details[i].level_learned_at);
+                            // } else if (movesTable[j].version_group_details[i].version_group.name === 'sun-moon' && movesTable[j].version_group_details[i].level_learned_at != 0) {
+                            //     llearnLevel.push(movesTable[j].version_group_details[i].level_learned_at);
+                            };
+                        };
+                    }
+                    // console.log(llearnLevel);
+                    document.getElementById('table-body').innerHTML = '';
+                    for (var i = 0; i < movesTable.length; i++) {
+                        document.getElementById('table-body').innerHTML += `<td>${llearnLevel[i]}</td><td>${moveValue[i]}</td>`;
+                    };
+
+                    function sortTable(n) {
+                        var table, rows, switching, i, x, y, shouldSwitch, switchcount = 0;
+                        table = document.getElementById('table-body');
+                        switching = true;
+                        while (switching) {
+                            switching = false;
+                            rows = table.getElementsByTagName("tr");
+                            for (i = 0; i < (rows.length - 1); i++) {
+                                shouldSwitch = false;
+                                x = parseFloat(rows[i].getElementsByTagName("td")[n].innerHTML);
+                                y = parseFloat(rows[i + 1].getElementsByTagName("td")[n].innerHTML);
+                                if (x > y) {
+                                    shouldSwitch = true;
+                                    break;
+                                }
+                            }
+                            if (shouldSwitch) {
+                                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                                switching = true;
+                                switchcount++;
+                            }
+                        }
+                    }
+
+                    sortTable(0);
                 });
         });
     });
-
 });
+
+
+// Testing
+
+// fetch('https://pokeapi.co/api/v2/pokemon/bulbasaur')
+//     .then(response => response.json())
+//     .then(data => {
+//         var movesTable = data.moves.filter(moveset => moveset.version_group_details[0].move_learn_method.name === 'level-up');
+//         console.log(movesTable);
+//         var llearnLevel = [];
+//         for (var j = 0; j < movesTable.length; j++) {
+//             for (var i = 0; i < movesTable[j].version_group_details.length; i++) {
+//                 if (movesTable[j].version_group_details[i].version_group.name === 'sword-shield' && movesTable[j].version_group_details[i].level_learned_at != 0) {
+//                     llearnLevel.push(movesTable[j].version_group_details[i].level_learned_at);
+//                 };
+//             };
+//         }
+//         console.log(llearnLevel);
+//     });
