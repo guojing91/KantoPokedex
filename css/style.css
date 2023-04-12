@@ -7,7 +7,8 @@ body {
     align-items: center;
 }
 
-.main-title, .subtitle {
+.main-title,
+.subtitle {
     color: #fff;
 }
 
@@ -97,54 +98,136 @@ body {
 
 .sprites {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: flex-start;
-    width: 800px;
+    width: 500px;
+    height: 150px;
+    padding: 20px;
 }
 
-.sprite1, .sprite2, .sprite3, .sprite4 {
+.sprite-normal,
+.sprite-shiny {
     color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+}
+
+#normal-sprite,
+#shiny-sprite {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.sprite-img {
+    background: #2a2f3b;
+    margin: 10px;
+    border-radius: 10%;
 }
 
 .type {
     display: flex;
     justify-content: space-evenly;
     align-items: flex-start;
-    width: 800px;
+    width: 500px;
+    height: 90px;
+    margin-bottom: 20px;
 }
 
-.type-1, .type-2 {
+.type-1,
+.type-2 {
     color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+}
+
+#first-type,
+#second-type {
+    margin-top: 20px;
 }
 
 .stats {
-    width: 250px;
+    width: 350px;
     color: #fff;
+    background: #2a2f3b;
+    border-radius: 10%;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    /* height: 25px; */
+    padding: 20px;
+    margin: 0px auto 25px;
+}
+
+#stats-title {
+    align-self: center;
 }
 
 .container {
     width: 100%;
-    background-color: #ddd;
+    background-color: #323741;
+    height: 18px;
+    margin-bottom: 12px;
 }
 
-.stat, .total-stats {
+.stat,
+.total-stats {
     color: white;
+}
+
+.stats-style {
+    margin-top: 5px;
 }
 
 .table {
     color: #fff;
+    width: 500px;
+    background: #2a2f3b;
+    border-radius: 25px;
+    padding: 25px 50px 50px;
+    margin-bottom: 100px;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    align-items: center;
+}
 
+#table-title {
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+th,
+td {
+    text-align: center;
+    height: 25px;
+    border: 3px #2a2f3b solid;
+    border-radius: 10px;
+}
+
+th {
+    background-color: #9c9da2;
+    color: black;
+}
+
+tr {
+    background-color: #3a3f4a;
+}
+
+td:first-child {
+    width: 30%;
+}
+
+td:nth-child(2) {
+    width: 70%;
+}

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>The Kanto Pokedex</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="main-title">
         <h1>The Kanto Pokedex</h1>
@@ -19,6 +21,7 @@
             <span class="selected">Select Me!</span>
             <div class="caret"></div>
         </div>
+        <input type="text" placeholder="Search...">
         <ol class="menu">
             <li class="active">Select Me!</li>
             <li>Bulbasaur</li>
@@ -103,7 +106,7 @@
             <li>Slowbro</li>
             <li>Magnemite</li>
             <li>Magneton</li>
-            <li>Farfetch'd</li>
+            <li>Farfetchd</li>
             <li>Doduo</li>
             <li>Dodrio</li>
             <li>Seel</li>
@@ -142,7 +145,7 @@
             <li>Seaking</li>
             <li>Staryu</li>
             <li>Starmie</li>
-            <li>Mr. Mime</li>
+            <li>Mr-Mime</li>
             <li>Scyther</li>
             <li>Jynx</li>
             <li>Electabuzz</li>
@@ -175,21 +178,19 @@
         </ol>
     </div>
     <div class="sprites">
-        <div class="sprite1">
-            <span class="sprite-font">Front Default</span>
-            <img src="" alt="" id="front-default">
+        <div class="sprite-normal">
+            <span class="sprite-font">Normal</span>
+            <div id="normal-sprite">
+                <img src="" alt="" class="sprite-img" id="front-default">
+                <img src="" alt="" class="sprite-img" id="back-default">
+            </div>
         </div>
-        <div class="sprite2">
-            <span class="sprite-font">Front Shiny</span>
-            <img src="" alt="" id="front-shiny">
-        </div>
-        <div class="sprite3">
-            <span class="sprite-font">Back Default</span>
-            <img src="" alt="" id="back-default">
-        </div>
-        <div class="sprite4">
-            <span class="sprite-font">Back Shiny</span>
-            <img src="" alt="" id="back-shiny">
+        <div class="sprite-shiny">
+            <span class="sprite-font">Shiny</span>
+            <div id="shiny-sprite">
+                <img src="" alt="" class="sprite-img" id="front-shiny">
+                <img src="" alt="" class="sprite-img" id="back-shiny">
+            </div>
         </div>
     </div>
     <div class="type">
@@ -203,45 +204,49 @@
         </div>
     </div>
     <div class="stats">
+        <span id="stats-title">Stats</span>
         <div class="hp">
-            <span>HP</span>
-            <div class="container">
+            <span class="stats-style">HP</span>
+            <div class="stats-style container">
                 <div class="stat" id="stats-hp"></div>
             </div>
         </div>
         <div class="attack">
-            <span>Attack</span>
-            <div class="container">
+            <span class="stats-style">Attack</span>
+            <div class="stats-style container">
                 <div class="stat" id="stats-attack"></div>
             </div>
         </div>
         <div class="defense">
-            <span>Defense</span>
-            <div class="container">
+            <span class="stats-style">Defense</span>
+            <div class="stats-style container">
                 <div class="stat" id="stats-defense"></div>
             </div>
         </div>
         <div class="spatt">
-            <span>Sp. Attack</span>
-            <div class="container">
+            <span class="stats-style">Sp. Attack</span>
+            <div class="stats-style container">
                 <div class="stat" id="stats-spatt"></div>
             </div>
         </div>
         <div class="spdef">
-            <span>Sp. Defense</span>
-            <div class="container">
+            <span class="stats-style">Sp. Defense</span>
+            <div class="stats-style container">
                 <div class="stat" id="stats-spdef"></div>
             </div>
         </div>
         <div class="speed">
-            <span>Speed</span>
-            <div class="container">
+            <span class="stats-style">Speed</span>
+            <div class="stats-style container">
                 <div class="stat" id="stats-speed"></div>
             </div>
         </div>
-        <div><span id="total-stats"></span></div>
-    </div>    
+        <div><span class="stats-style" id="total-stats"></span></div>
+    </div>
     <div class="table">
+        <div id="table-title">
+            <p>Movesets by Level Up</p>
+        </div>
         <table>
             <thead id="table-head">
                 <th>Level</th>
@@ -254,4 +259,5 @@
 
     <script src="javascript.js"></script>
 </body>
+
 </html>

@@ -52,11 +52,15 @@ dropdowns.forEach(dropdown => {
                     document.getElementById('front-shiny').src = `${data.sprites.front_shiny}`;
                     document.getElementById('back-default').src = `${data.sprites.back_default}`;
                     document.getElementById('back-shiny').src = `${data.sprites.back_shiny}`;
-                    document.getElementById('first-type').innerText = `${data.types[0].type.name}`;
+                    var type1Name = data.types[0].type.name;
+                    var type1 = type1Name.charAt(0).toUpperCase() + type1Name.slice(1).toLowerCase();
+                    document.getElementById('first-type').innerText = type1;
                     if (data.types.length === 1) {
                         document.getElementById('second-type').innerText = '-';
                     } else {
-                        document.getElementById('second-type').innerText = `${data.types[1].type.name}`;
+                        var type2Name = data.types[1].type.name;
+                        var type2 = type2Name.charAt(0).toUpperCase() + type2Name.slice(1).toLowerCase();
+                        document.getElementById('second-type').innerText = type2;
                     }
                     const statsHP = data.stats[0].base_stat;
                     const statsAtt = data.stats[1].base_stat;
@@ -78,31 +82,26 @@ dropdowns.forEach(dropdown => {
                     document.getElementById('stats-speed').style.cssText = `width: ${statsSpd / 200 * 100}%; background-color: #5E420C`;
                     document.getElementById('total-stats').innerText = `Total = ${statsHP + statsAtt + statsDef + statsSpAtt + statsSpDef + statsSpd}`;
 
-                    var movesTable = data.moves.filter(moveset => moveset.version_group_details[0].move_learn_method.name === 'level-up');
-                    // console.log(movesTable);
-
-                    var moveDetails = movesTable.map(thisMove => thisMove.move);
-                    // console.log(moveDetails);
-                    var moveValue = moveDetails.map(names => Object.values(names)[0]);
-                    // console.log(moveValue);
-                    var llearnLevel = [];
-                    for (var j = 0; j < movesTable.length; j++) {
-                        for (var i = 0; i < movesTable[j].version_group_details.length; i++) {
-                            if (movesTable[j].version_group_details[i].version_group.name === 'scarlet-violet' && movesTable[j].version_group_details[i].level_learned_at != 0) {
-                                llearnLevel.push(movesTable[j].version_group_details[i].level_learned_at);
-                            } else if (movesTable[j].version_group_details[i].version_group.name === 'sword-shield' && movesTable[j].version_group_details[i].level_learned_at != 0) {
-                                llearnLevel.push(movesTable[j].version_group_details[i].level_learned_at);
-                            // } else if (movesTable[j].version_group_details[i].version_group.name === 'ultra-sun-ultra-moon' && movesTable[j].version_group_details[i].level_learned_at != 0) {
-                            //     llearnLevel.push(movesTable[j].version_group_details[i].level_learned_at);
-                            // } else if (movesTable[j].version_group_details[i].version_group.name === 'sun-moon' && movesTable[j].version_group_details[i].level_learned_at != 0) {
-                            //     llearnLevel.push(movesTable[j].version_group_details[i].level_learned_at);
+                    var newMethodMoveName = [];
+                    var newMethodMoveLevel = [];
+                    for (var j = 0; j < data.moves.length; j++) {
+                        for (var i = 0; i < data.moves[j].version_group_details.length; i++) {
+                            if (data.moves[j].version_group_details[i].version_group.name === 'lets-go-pikachu-lets-go-eevee' && data.moves[j].version_group_details[i].move_learn_method.name === 'level-up' && data.moves[j].version_group_details[i].level_learned_at != 0) {
+                                var str = data.moves[j].move.name;
+                                var newStr = str.replace(/(^|-)([a-z])/g, (match, p1, p2) => `${p1}${p2.toUpperCase()}`);
+                                var finalStr = newStr.replace('-', ' ');
+                                newMethodMoveName.push(finalStr);
+            
+                                newMethodMoveLevel.push(data.moves[j].version_group_details[i].level_learned_at);
                             };
                         };
                     }
-                    // console.log(llearnLevel);
+                    // console.log(newMethodMoveName);
+                    // console.log(newMethodMoveLevel);
+
                     document.getElementById('table-body').innerHTML = '';
-                    for (var i = 0; i < movesTable.length; i++) {
-                        document.getElementById('table-body').innerHTML += `<td>${llearnLevel[i]}</td><td>${moveValue[i]}</td>`;
+                    for (var i = 0; i < newMethodMoveName.length; i++) {
+                        document.getElementById('table-body').innerHTML += `<td>${newMethodMoveLevel[i]}</td><td>${newMethodMoveName[i]}</td>`;
                     };
 
                     function sortTable(n) {
@@ -141,15 +140,22 @@ dropdowns.forEach(dropdown => {
 // fetch('https://pokeapi.co/api/v2/pokemon/bulbasaur')
 //     .then(response => response.json())
 //     .then(data => {
-//         var movesTable = data.moves.filter(moveset => moveset.version_group_details[0].move_learn_method.name === 'level-up');
-//         console.log(movesTable);
-//         var llearnLevel = [];
-//         for (var j = 0; j < movesTable.length; j++) {
-//             for (var i = 0; i < movesTable[j].version_group_details.length; i++) {
-//                 if (movesTable[j].version_group_details[i].version_group.name === 'sword-shield' && movesTable[j].version_group_details[i].level_learned_at != 0) {
-//                     llearnLevel.push(movesTable[j].version_group_details[i].level_learned_at);
+//         // var movesTable = data.moves.filter(moveset => moveset.version_group_details[0].move_learn_method.name === 'level-up');
+//         // console.log(movesTable);
+//         var newMethodMoveName = [];
+//         var newMethodMoveLevel = [];
+//         for (var j = 0; j < data.moves.length; j++) {
+//             for (var i = 0; i < data.moves[j].version_group_details.length; i++) {
+//                 if (data.moves[j].version_group_details[i].version_group.name === 'lets-go-pikachu-lets-go-eevee' && data.moves[j].version_group_details[i].move_learn_method.name === 'level-up') {
+//                     var str = data.moves[j].move.name;
+//                     var newStr = str.replace(/(^|-)([a-z])/g, (match, p1, p2) => `${p1}${p2.toUpperCase()}`);
+//                     var finalStr = newStr.replace('-', ' ');
+//                     newMethodMoveName.push(finalStr);
+
+//                     newMethodMoveLevel.push(data.moves[j].version_group_details[i].level_learned_at);
 //                 };
 //             };
 //         }
-//         console.log(llearnLevel);
+//         console.log(newMethodMoveName);
+//         console.log(newMethodMoveLevel);
 //     });
