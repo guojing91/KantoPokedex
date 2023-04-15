@@ -167,6 +167,48 @@ for (var i = 0; i < listItems.length; i++) {
                 }
 
                 sortTable(0);
+
+                var table = document.getElementById('table-body');
+                var rows = table.querySelectorAll('tr');
+                var originalString;
+                var modifiedString;
+                var moveData;
+                var moveText;
+
+                rows.forEach(row => {
+                    var cellsInRow = row.querySelectorAll('td');
+                    cellsInRow[1].addEventListener('click', function() {
+                        originalString = cellsInRow[1].innerText;
+                        modifiedString = originalString.toLowerCase().replace(' ', '-');
+                        // console.log(modifiedString);
+
+                        for (var i = 0; i < data.moves.length; i++) {
+                            if (data.moves[i].move.name === modifiedString) {
+                                moveData = data.moves[i].move.url;
+                            }
+                        }
+
+                        fetch(moveData)
+                            .then(results => results.json())
+                            .then(details => {
+                                for (var i = 0; i < details.flavor_text_entries.length; i++) {
+                                    if (details.flavor_text_entries[i].version_group.name === 'ultra-sun-ultra-moon' && details.flavor_text_entries[i].language.name === 'en') {
+                                        moveText = details.flavor_text_entries[i].flavor_text;
+                                    }
+                                }
+                                console.log(`
+                                    Move Name = ${originalString}
+                                    Type = ${details.type.name}
+                                    Base Power = ${details.power}
+                                    Accuracy = ${details.accuracy}
+                                    Damage Class = ${details.damage_class.name}
+                                    Effects = ${details.effect_entries[0].effect}
+                                    Description = ${moveText}
+                                    `);
+                            })
+                    });
+                });
+
             });
     });
 };
