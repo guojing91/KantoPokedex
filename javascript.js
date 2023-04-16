@@ -41,15 +41,30 @@
 //             //Add 'active' class to apply styles to the clicked element
 //             option.classList.add('active');
 
+var movePopUp = document.querySelector('.move-popup');
+var closePopupButtons = document.querySelectorAll('[data-close-button]');
+var overlay = document.getElementById('overlay');
 
+function openPopUp() {
+    movePopUp.classList.add('active');
+    overlay.classList.add('active');
+}
+
+function closePopUp() {
+    movePopUp.classList.remove('active');
+    overlay.classList.remove('active');
+}
 
 // Get the dropdown button and content
 var dropdownBtn = document.querySelector(".dropdown-btn");
 var dropdownContent = document.querySelector(".dropdown-content");
+var overlay1 = document.getElementById('overlay-1');
 
 // When the dropdown button is clicked, show or hide the dropdown content
 dropdownBtn.addEventListener("click", function () {
     dropdownContent.classList.toggle("show");
+    overlay1.classList.toggle('active');
+    dropdownBtn.classList.toggle('active');
 });
 
 // Get the search box and list items
@@ -75,9 +90,8 @@ for (var i = 0; i < listItems.length; i++) {
     item.addEventListener("click", function () {
         dropdownBtn.innerHTML = this.innerHTML;
         dropdownContent.classList.remove("show");
-
-
-
+        overlay1.classList.remove('active');
+        dropdownBtn.classList.remove('active');
 
         //Change selected text to lower case to put into url
         const pokemonName = (dropdownBtn.innerHTML).toLowerCase();
@@ -177,7 +191,10 @@ for (var i = 0; i < listItems.length; i++) {
 
                 rows.forEach(row => {
                     var cellsInRow = row.querySelectorAll('td');
-                    cellsInRow[1].addEventListener('click', function() {
+                    cellsInRow[1].addEventListener('click', function () {
+
+                        openPopUp();
+
                         originalString = cellsInRow[1].innerText;
                         modifiedString = originalString.toLowerCase().replace(' ', '-');
                         // console.log(modifiedString);
@@ -196,20 +213,56 @@ for (var i = 0; i < listItems.length; i++) {
                                         moveText = details.flavor_text_entries[i].flavor_text;
                                     }
                                 }
-                                console.log(`
-                                    Move Name = ${originalString}
-                                    Type = ${details.type.name}
-                                    Base Power = ${details.power}
-                                    Accuracy = ${details.accuracy}
-                                    Damage Class = ${details.damage_class.name}
-                                    Effects = ${details.effect_entries[0].effect}
-                                    Description = ${moveText}
-                                    `);
+                                var moveTitle = document.querySelector('.move-title');
+                                moveTitle.innerText = `${originalString}`;
+
+                                var moveType = document.getElementById('move-type-value');
+                                var basePower = document.getElementById('base-power-value');
+                                var accuracy = document.getElementById('accuracy-value');
+                                var damageClass = document.getElementById('damage-class-value');
+                                var moveDescription = document.getElementById('move-description-value');
+                                var moveEffect = document.getElementById('move-effect-value');
+                                var typeName = details.type.name.charAt(0).toUpperCase() + details.type.name.slice(1);
+                                moveType.innerText = `${typeName}`;
+                                var damageClassName = details.damage_class.name.charAt(0).toUpperCase() + details.damage_class.name.slice(1);
+                                damageClass.innerText = `${damageClassName}`;
+                                if (!details.power) {
+                                    basePower.innerText = '-';
+                                } else {
+                                    basePower.innerText = `${details.power}`;
+                                };
+                                if (!details.accuracy) {
+                                    accuracy.innerText = '-';
+                                } else {
+                                    accuracy.innerText = `${details.accuracy}`;
+                                };
+                                var oriMoveDesc = moveText;
+                                var modifiedMoveDesc = oriMoveDesc.replace(/(\w)[\n\r]+(\w)/g, "$1 $2").replace(/\n|\r/g, " ").replace(/\./g, ". ");
+                                moveDescription.innerText = `${modifiedMoveDesc}`;
+                                var oriMoveEffect = details.effect_entries[0].effect;
+                                var modifiedMoveEffect = oriMoveEffect.replace(/\$effect_chance/g, details.effect_chance);
+                                var modifiedMoveEffect2 = modifiedMoveEffect.replace(/(^\s*\w|[\.\?!]\s*\w)/g, (match) => match.toUpperCase());
+                                moveEffect.innerText = `${modifiedMoveEffect2}`;
                             })
                     });
+
+                    closePopupButtons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            closePopUp();
+                        })
+                    })
+
+                    overlay.addEventListener('click', () => {
+                        closePopUp();
+                    })
                 });
 
             });
+    });
+    overlay1.addEventListener('click', () => {
+        dropdownContent.classList.remove("show");
+        overlay1.classList.remove('active');
+        dropdownBtn.classList.remove('active');
     });
 };
 //         });

@@ -18,6 +18,7 @@ body {
     position: sticky;
     top: -45px;
     display: inline-block;
+    z-index: 5;
 }
 
 .dropdown-btn {
@@ -30,6 +31,10 @@ body {
     border-radius: 10px;
     cursor: pointer;
     margin: 50px 0 0px;
+}
+
+.dropdown-btn.active {
+    border: 2px solid greenyellow;
 }
 
 .dropdown-btn:hover {
@@ -76,6 +81,23 @@ body {
 .show {
     display: block;
 }
+
+#overlay-1 {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+#overlay-1.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
 /* New ends here */
 
 /* .dropdown {
@@ -299,4 +321,128 @@ td:first-child {
 
 td:nth-child(2) {
     width: 70%;
+}
+
+td:nth-child(2):hover {
+    cursor: pointer;
+    background-color: #9c9da2;
+    color: black;
+}
+
+.move-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border-right: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: white;
+    width: 500px;
+    max-width: 80%;
+}
+
+.move-popup.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.move-header {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.move-header .move-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.move-header .close-button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.move-body {
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    z-index: 8;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.move-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.move-type,
+.base-power,
+.accuracy,
+.damage-class {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 10px;
+    background-color: #b0b3b9;
+    border: none;
+    border-radius: 5px;
+}
+
+#move-type-title,
+#base-power-title,
+#accuracy-title,
+#damage-class-title,
+#move-description-title,
+#move-effect-title {
+    padding: 5px;
+}
+
+#move-type-value,
+#base-power-value,
+#accuracy-value,
+#damage-class-value,
+#move-description-value,
+#move-effect-value {
+    padding: 5px;
+    color: white;
+}
+
+.move-description,
+.move-effect {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 10px;
+    background-color: #b0b3b9;
+    border: none;
+    border-radius: 5px;
+}
+
+.move-effect {
+    margin-bottom: 8px;
 }
