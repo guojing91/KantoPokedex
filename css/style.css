@@ -10,6 +10,7 @@ body {
 .main-title,
 .subtitle {
     color: #fff;
+    z-index: 3;
 }
 
 /* New starts here */
@@ -91,11 +92,28 @@ body {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
     pointer-events: none;
+    z-index: 4;
 }
 
 #overlay-1.active {
     opacity: 1;
     pointer-events: all;
+}
+
+#overlay-2 {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: black;
+    pointer-events: all;
+    z-index: 2;
+}
+
+#overlay-2.remove {
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* New ends here */
@@ -185,6 +203,10 @@ body {
     display: block;
     opacity: 1;
 } */
+
+.pre {
+    display: none;
+}
 
 .sprites {
     display: flex;

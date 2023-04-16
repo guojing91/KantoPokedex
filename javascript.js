@@ -59,6 +59,7 @@ function closePopUp() {
 var dropdownBtn = document.querySelector(".dropdown-btn");
 var dropdownContent = document.querySelector(".dropdown-content");
 var overlay1 = document.getElementById('overlay-1');
+var overlay2 = document.getElementById('overlay-2');
 
 // When the dropdown button is clicked, show or hide the dropdown content
 dropdownBtn.addEventListener("click", function () {
@@ -92,6 +93,7 @@ for (var i = 0; i < listItems.length; i++) {
         dropdownContent.classList.remove("show");
         overlay1.classList.remove('active');
         dropdownBtn.classList.remove('active');
+        overlay2.classList.add('remove');
 
         //Change selected text to lower case to put into url
         const pokemonName = (dropdownBtn.innerHTML).toLowerCase();
